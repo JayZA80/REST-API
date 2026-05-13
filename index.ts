@@ -28,13 +28,19 @@ const main = async () => {
         });
 
         app.get('/info', async (req, res) => {
-            const data = await getter.getOne(collection, '');
+            const data = await getter.getOne(collection);
             res.send(data);
         });
         // it's best to separate an empty query route and a route with a specific id
         app.get('/info/:id', async (req, res) => {
             const id = req.params.id;
-            const data = await getter.getOne(collection, id);
+            const data = await getter.getById(collection, id);
+            res.send(data);
+        });
+
+        app.get('/info/:title', async (req, res) => {
+            const title = req.params.title;
+            const data = await getter.getByTitle(collection, title);
             res.send(data);
         });
 
@@ -44,7 +50,8 @@ const main = async () => {
 
         app.listen(port, () => {
             console.log(`Example app listening on port ${port}`)
-        })
+        });
+        
     } catch (error) {
         throw new Error("Error in main function.");
     }
