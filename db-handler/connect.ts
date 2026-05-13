@@ -14,6 +14,9 @@ const connectToDatabase = async () => {
   try {
     await client.connect();
     console.log("Connected to MongoDB");
+    const database = client.db("videos");
+    const collection = database.collection("info");
+    return collection;
     } catch (error) {
     console.error("Error connecting to MongoDB:", error);
     throw error;
