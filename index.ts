@@ -22,12 +22,12 @@ const main = async () => {
         const collection = await connection();
         console.log(collection);
 
-        app.get('/', async (req, res) => {
+        app.get('/info', async (req, res) => {
             const data = await getter.getSome(collection, 5);
             res.send(data);
         });
 
-        app.get('/info', async (req, res) => {
+        app.get('/info/latest', async (req, res) => {
             const data = await getter.getOne(collection);
             res.send(data);
         });

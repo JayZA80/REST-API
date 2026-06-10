@@ -19,18 +19,23 @@ const main = async () => {
     try {
         const collection = await connection();
         console.log(collection);
-        app.get('/', async (req, res) => {
+        app.get('/info', async (req, res) => {
             const data = await getter.getSome(collection, 5);
             res.send(data);
         });
-        app.get('/info', async (req, res) => {
-            const data = await getter.getOne(collection, '');
+        app.get('/info/first', async (req, res) => {
+            const data = await getter.getOne(collection);
             res.send(data);
         });
-        // it's best to separate an empty query and a query with an id, so that we can avoid confusion and potential bugs.
+        // it's best to separate an empty query route and a route with a specific id
         app.get('/info/:id', async (req, res) => {
             const id = req.params.id;
-            const data = await getter.getOne(collection, id);
+            const data = await getter.getById(collection, id);
+            res.send(data);
+        });
+        app.get('/info/:title', async (req, res) => {
+            const title = req.params.title;
+            const data = await getter.getByTitle(collection, title);
             res.send(data);
         });
         app.get('/umadacchi', (req, res) => {
